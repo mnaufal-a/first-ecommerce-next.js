@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import  SearchInput  from "@/components/SearchInput"
 import SortSelect from "../../components/SortSelect"
-import { motion } from "framer-motion"
+// import { motion } from "framer-motion"
 
 export default async function ProductsPage({ searchParams }) {
     const params = await  searchParams
