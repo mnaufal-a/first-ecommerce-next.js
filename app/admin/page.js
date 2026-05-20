@@ -1,4 +1,3 @@
-"use client"
 
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
@@ -7,21 +6,21 @@ import AdminForm from "./AdminForm";
 import { prisma } from "../../lib/prisma";
 import ProductItem from "./ProductItem"
 import AdminClient from "./AdminClient";
-import { useAuth } from "../../context/AuthContext";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+// import { useAuth } from "../../context/AuthContext";
+// import { useRouter } from "next/navigation";
+// import { useEffect } from "react";
 
 export default async function  AdminPage() {
-    const { user } = useAuth()
-    const router = useRouter()
+    // const { user } = useAuth()
+    // const router = useRouter()
     
-    // const session = await getServerSession(authOptions)
+    // // const session = await getServerSession(authOptions)
 
-    useEffect(() => {
-        if (user?.role !== "ADMIN") {
-            router.push("/") // tendang ke home
-        }
-    }, [user])
+    // useEffect(() => {
+    //     if (user?.role !== "ADMIN") {
+    //         router.push("/") // tendang ke home
+    //     }
+    // }, [user])
     
     // if (!session) {
     //     redirect("/")

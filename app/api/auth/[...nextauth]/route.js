@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
+console.log("NEXTAUTH_URL:", process.env.NEXTAUTH_URL)
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -61,6 +62,11 @@ export const authOptions = {
   }
 },
 }
+
+console.log(
+  "GOOGLE CALLBACK:",
+  `${process.env.NEXTAUTH_URL}/api/auth/callback/google`
+)
 
 const handler = NextAuth(authOptions)
 
