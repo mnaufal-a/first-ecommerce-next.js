@@ -17,27 +17,17 @@ export default function Page() {
 
   return (
     <>
-      
 
       <div className="fp-body">
 
         {/* NAV */}
         <nav className="fp-nav fp-reveal">
           <Link href="/" className="fp-logo-wrap">
-            <svg width="32" height="32" viewBox="0 0 36 36" fill="none" stroke="#080808" strokeWidth="2">
-              <circle cx="18" cy="18" r="15"/>
-              <circle cx="18" cy="18" r="10" strokeWidth="1.5"/>
-              <line x1="7" y1="25" x2="13" y2="18" strokeLinecap="round"/>
-              <line x1="29" y1="25" x2="23" y2="18" strokeLinecap="round"/>
-              <path d="M12 15 Q18 9 24 15" strokeLinecap="round" fill="none" strokeWidth="1.5"/>
-              <line x1="14" y1="19" x2="14" y2="22" strokeLinecap="round" strokeWidth="2.5"/>
-              <line x1="22" y1="19" x2="22" y2="22" strokeLinecap="round" strokeWidth="2.5"/>
-              <path d="M13 24 Q18 28 23 24" strokeLinecap="round" fill="none" strokeWidth="1.5"/>
-            </svg>
+            <img src="/logo.png" alt="FALLPROJECT" style={{width:40,height:40,objectFit:'contain'}} />
             <span className="fp-brandname">FALLPROJECT</span>
           </Link>
           <div className="fp-nav-links">
-            <a href="#">NEW IN</a>
+            
             <Link href="/products">PRODUCTS</Link>
             <a href="#">LOOKBOOK</a>
             <a href="#">SALE</a>
@@ -71,9 +61,9 @@ export default function Page() {
           ].map((m, i) => (
             <div key={i} className={`fp-model-slot ${m.cls}`}>
               {/* Ganti src berikut dengan foto model kamu */}
-              {/* <img src={`/models/model-${i+1}.jpg`} alt={m.label} /> */}
-              <div className="fp-add-icon">+</div>
-              <span className="fp-slot-badge">{m.label}</span>
+               <img src={`/models/model-${i+1}.jpeg`} alt={m.label} />
+              {/* <div className="fp-add-icon">+</div>
+              <span className="fp-slot-badge">{m.label}</span> */}
             </div>
           ))}
 
@@ -87,7 +77,12 @@ export default function Page() {
               <button className="fp-btn-blue" onClick={() => window.location.href='/products'}>
                 SHOP NOW
               </button>
-              <button className="fp-btn-outline">LOOKBOOK</button>
+              <button 
+                  className="fp-btn-outline"
+                  onClick={() => signIn("google", { callbackUrl: "/products" })}
+                >
+                  LOGIN
+              </button>
             </div>
           </div>
         </div>
@@ -116,13 +111,13 @@ export default function Page() {
             {[
               { name: 'FP Classic Tee', price: 'Rp 299.000', badge: 'NEW' },
               { name: 'FP Oversized Vol.3', price: 'Rp 399.000', badge: null },
-              { name: 'FP Hoodie Drop', price: 'Rp 549.000', badge: 'HOT' },
+              { name: 'RISOL MAYO JAMAL', price: 'Rp 3.500', badge: 'HOT' },
               { name: 'FP Cargo Pants', price: 'Rp 479.000', badge: 'NEW' },
             ].map((p, i) => (
               <div key={i} className="fp-product-card fp-reveal">
                 <div className="fp-product-img">
                   {p.badge && <span className="fp-product-badge">{p.badge}</span>}
-                  {/* Ganti dengan: <img src={`/products/product-${i+1}.jpg`} alt={p.name} /> */}
+                   <img src={`/products/product-${i+1}.jpg`} alt={p.name} /> 
                   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1">
                     <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z"/>
                   </svg>
@@ -140,7 +135,7 @@ export default function Page() {
         <div className="fp-login-section fp-reveal">
           <div>
             <h2 className="fp-login-heading">
-              {session ? `WELCOME, ${session.user?.name?.split(' ')[0]?.toUpperCase()}` : 'JOIN THE <span>COMMUNITY</span>'}
+              {session ? `WELCOME, ${session.user?.name?.split(' ')[0]?.toUpperCase()}` : 'JOIN THE COMMUNITY NOW!'}
             </h2>
             <p className="fp-login-sub">
               {session ? 'Kamu sudah login — akses member exclusive tersedia' : 'Login untuk akses member exclusive, promo & lookbook terbaru'}
@@ -149,7 +144,7 @@ export default function Page() {
           {!session ? (
             <button
               className="fp-google-btn"
-              onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+              onClick={() => signIn("google", { callbackUrl: "/products" })}
             >
               <svg viewBox="0 0 24 24" fill="none">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -160,8 +155,8 @@ export default function Page() {
               LOGIN WITH GOOGLE
             </button>
           ) : (
-            <Link href="/dashboard">
-              <button className="fp-google-btn">DASHBOARD →</button>
+            <Link href="/products">
+              <button className="fp-google-btn">YUK LOGIN →</button>
             </Link>
           )}
         </div>
@@ -170,7 +165,7 @@ export default function Page() {
         <footer className="fp-footer">
           <span className="fp-footer-brand">FALLPROJECT</span>
           <span className="fp-footer-copy">© 2025 FALLPROJECT. ALL RIGHTS RESERVED.</span>
-          <span className="fp-footer-copy">JAKARTA, ID</span>
+          <span className="fp-footer-copy">BEKASI, ID</span>
         </footer>
 
       </div>

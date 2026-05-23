@@ -1,67 +1,86 @@
-
-
-import { prisma } from "../../../lib/prisma";
-import AddToCartButton from "../../../components/AddToCartButton";
+import { prisma } from "@/lib/prisma"
+import Link from "next/link"
+import AddToCartBtn from "@/components/AddToCartBtn"
 
 export default async function ProductDetail({ params }) {
-    const { id } = await params
-    
+  const { id } = await params
 
-    const product = await prisma.product.findUnique({
-        where: { id }
-    })
-    
-    if (!product) return <div className="p-10">Produk tidak ditemukan!</div>
+  const product = await prisma.product.findUnique({ where: { id } })
 
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-            minimumFractionDigits: 0,
-        }).format(price)
-    }
-
+  if (!product) {
     return (
-        <div className="p-8 max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-10">
-
-                <div className="w-full">
-                    <img
-                        src={product.image || "https://picsum.photos/600"}
-                        className="w-full h-[400px] object-cover rounded-xl shadow hover:scale-105 transition"
-                    />
-                </div>
-
-                <div className="space-y-5">
-                    <h1 className="text-3xl font-bold">
-                        {product.name}
-                    </h1>
-
-                    <p className="text-2xl font-semibold text-gray-800">
-                        {formatPrice(product.price)}
-                    </p>
-
-                    <span className="inline-block bg-gray-200 px-3 py-1 rounded text-sm">
-                        Stock Tersedia!
-                    </span>
-
-                    <p className="text-gray-600 leading-relaxed">
-                        Produk ini adalah pilihan terbaik untuk kebutuhan kamu.
-                        Kualitas terjamin, desain modern, dan cocok untuk penggunaan sehari-hari.
-                    </p>
-
-                    <div className="flex gap-3 pt-4">
-                        <button className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition">
-                            Beli Sekarang
-                        </button>
-
-                        <AddToCartButton product={product}/>
-                    </div>
-                </div>
-            </div>
-
-
-
-        </div>
+      <div className="fp-not-found">
+        <span style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: 3 }}>
+          PRODUK TIDAK DITEMUKAN
+        </span>
+      </div>
     )
+  }
+
+  return (
+    <div className="fp-detail-page">
+
+      {/* IMAGE */}
+      <div className="fp-detail-image-wrap">
+        <img
+          src={product.image || "/no-image.png"}
+          alt={product.name}
+          className="fp-detail-image"
+        />
+      </div>
+
+      {/* INFO */}
+      <div className="fp-detail-info">
+
+        <Link href="/products" style={{
+          fontSize: 12, color: "#F189B8", letterSpacing: 2,
+          textDecoration: "none", display: "inline-flex",
+          alignItems: "center", gap: 6, marginBottom: 32,
+          transition: "color .2s",
+        }}>
+          ← BACK TO PRODUCTS
+        </Link>
+
+        <p className="fp-detail-tag">FALLPROJECT COLLECTION</p>
+
+        <h1 className="fp-detail-title">{product.name}</h1>
+
+        <div className="fp-detail-price">
+          Rp {product.price.toLocaleString("id-ID")}
+        </div>
+
+        <p className="fp-detail-description">
+          {product.description || "Premium quality streetwear dari FALLPROJECT. Dibuat dengan bahan terbaik untuk kenyamanan maksimal."}
+        </p>
+
+        {/* Size picker */}
+        <div style={{ marginTop: 28 }}>
+          <p style={{ fontSize: 10, letterSpacing: 3, color: "#87CEFA", marginBottom: 12 }}>
+            PILIH UKURAN
+          </p>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {["S","M","L","XL","XXL"].map(size => (
+              <button key={size} className="fp-size-btn"
+              >
+                {size}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="fp-detail-actions">
+          <AddToCartBtn product={product} />
+          <button className="fp-detail-buy-btn">BUY NOW</button>
+        </div>
+
+        {/* Tags */}
+        <div style={{ marginTop: 32, paddingTop: 24, borderTop: "1px solid #1a1a1a" }}>
+          <p style={{ fontSize: 11, color: "#444", letterSpacing: 2 }}>
+            FALLPROJECT · STREETWEAR · JAKARTA
+          </p>
+        </div>
+
+      </div>
+    </div>
+  )
 }

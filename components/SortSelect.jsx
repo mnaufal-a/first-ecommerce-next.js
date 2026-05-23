@@ -6,21 +6,29 @@ export default function SortSelect() {
     const router = useRouter()
     const searchParams = useSearchParams()
 
+    const currentSort = searchParams.get("sort") || ""
+
+
     const handleChange = (e) => {
-        const value = e.target.value
-        const params = new URLSearchParams(searchParams)
+        
+        const params = new URLSearchParams(searchParams.toString())
 
-        if (value) params.set("sort", value)
-        else params.delete("sort") 
+        params.set("sort", e.target.value)
 
-        router.replace(`products?${params.toString()}`)
+        if (!e.target.value) {
+        params.delete("sort")
+        }
+
+        params.set("page", "1")
+
+        router.push(`/products?${params.toString()}`)
     }
 
     return (
         <select
+            value={currentSort}
             onChange={handleChange}
-            defaultValue={searchParams.get("sort") || ""}
-            className="border px-3 py-2 rounded-md"
+            className="fp-sort-select"
         >
             <option value="">Sort</option>
             <option value="price_asc">Harga Termurah</option>
